@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,4 +19,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/karpenmobileapp"
+        android:textColor="@color/white"
+        android:layout_marginTop="300dp"
+        android:layout_marginLeft="120dp"
+        tools:ignore="RtlHardcoded"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="20sp"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/todo"
+        android:layout_marginTop="210dp"
+        android:layout_marginStart="170dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/my_github"
+        android:layout_marginStart="155dp"
+        android:layout_marginTop="600dp"
+        style="@android:style/Widget.Holo.Button"/>
 </RelativeLayout>
