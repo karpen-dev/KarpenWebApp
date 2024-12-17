@@ -38,30 +38,36 @@ class MainActivity : ComponentActivity() {
         webView.webViewClient = WebViewClient()
         webView.webChromeClient = WebChromeClient()
 
-        webView.settings.javaScriptEnabled = true
-        webView.loadUrl("https://res.karpendev.ru/mobile/")
+        webView.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
+        textView.visibility = View.VISIBLE
+        imgView.visibility = View.VISIBLE
+        gitButton.visibility = View.VISIBLE
 
-        webView.setVisibility(View.GONE)
-        webView.setWebViewClient(object : WebViewClient() {
-            override fun onPageStarted(view: WebView?, url: String?, favicon: android.graphics.Bitmap?) {
-                progressBar.visibility = View.VISIBLE
-                textView.visibility = View.VISIBLE
-                imgView.visibility = View.VISIBLE
-                gitButton.visibility = View.VISIBLE
-                webView.visibility = View.GONE
-            }
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
+            webView.settings.javaScriptEnabled = true
+            webView.loadUrl("https://res.karpendev.ru/mobile/")
 
-            override fun onPageFinished(view: WebView?, url: String?) {
-                val handler = Handler(Looper.getMainLooper())
-                handler.postDelayed({
+            webView.setWebViewClient(object : WebViewClient() {
+                override fun onPageStarted(view: WebView?, url: String?, favicon: android.graphics.Bitmap?) {
+                    progressBar.visibility = View.VISIBLE
+                    textView.visibility = View.GONE
+                    imgView.visibility = View.GONE
+                    gitButton.visibility = View.GONE
+                    webView.visibility = View.GONE
+                }
+
+                override fun onPageFinished(view: WebView?, url: String?) {
                     progressBar.visibility = View.GONE
                     textView.visibility = View.GONE
                     imgView.visibility = View.GONE
                     gitButton.visibility = View.GONE
                     webView.visibility = View.VISIBLE
-                }, 1000) // one seconds prev
-            }
-        })
+                }
+            })
+        }, 2000)
+
 
         gitButton.setOnClickListener(){
             openBrowser("https://karpendev.ru/git")
