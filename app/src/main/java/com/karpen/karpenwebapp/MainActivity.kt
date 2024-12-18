@@ -1,6 +1,7 @@
 package com.karpen.karpenwebapp
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -15,6 +16,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import java.io.File
 
 class MainActivity : ComponentActivity() {
 
@@ -23,6 +25,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var textView: TextView
     private lateinit var imgView: ImageView
     private lateinit var gitButton: Button
+    private lateinit var fixBtn: Button
 
     @SuppressLint("SetJavaScriptEnabled", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +37,7 @@ class MainActivity : ComponentActivity() {
         textView = findViewById(R.id.textView)
         imgView = findViewById(R.id.imageView)
         gitButton = findViewById(R.id.button)
+        fixBtn = findViewById(R.id.clear)
 
         webView.webViewClient = WebViewClient()
         webView.webChromeClient = WebChromeClient()
@@ -43,6 +47,7 @@ class MainActivity : ComponentActivity() {
         textView.visibility = View.VISIBLE
         imgView.visibility = View.VISIBLE
         gitButton.visibility = View.VISIBLE
+        fixBtn.visibility = View.VISIBLE
 
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
@@ -56,6 +61,7 @@ class MainActivity : ComponentActivity() {
                     imgView.visibility = View.GONE
                     gitButton.visibility = View.GONE
                     webView.visibility = View.GONE
+                    fixBtn.visibility = View.GONE
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
@@ -63,6 +69,7 @@ class MainActivity : ComponentActivity() {
                     textView.visibility = View.GONE
                     imgView.visibility = View.GONE
                     gitButton.visibility = View.GONE
+                    fixBtn.visibility = View.GONE
                     webView.visibility = View.VISIBLE
                 }
             })
@@ -71,6 +78,10 @@ class MainActivity : ComponentActivity() {
 
         gitButton.setOnClickListener(){
             openBrowser("https://karpendev.ru/git")
+        }
+
+        fixBtn.setOnClickListener(){
+            clearCache(this)
         }
     }
 
@@ -87,6 +98,27 @@ class MainActivity : ComponentActivity() {
             webView.goBack()
         } else{
             super.onBackPressed()
+        }
+    }
+
+    fun clearCache(context: Context){
+        try {
+            val dir = context.cacheDir
+            if (dir.isDirectory){
+                deleteDir(dir)
+            }
+        } catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
+
+    private fun deleteDir(dir: File): Any? {
+        return if (dir.isDirectory) {
+            dir.listFiles()?.forEach { child ->
+                deleteDir(child)
+            }
+        } else {
+            dir.delete()
         }
     }
 }
