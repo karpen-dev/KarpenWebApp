@@ -24,8 +24,6 @@ class MainActivity : ComponentActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var textView: TextView
     private lateinit var imgView: ImageView
-    private lateinit var gitButton: Button
-    private lateinit var fixBtn: Button
 
     @SuppressLint("SetJavaScriptEnabled", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,8 +34,6 @@ class MainActivity : ComponentActivity() {
         progressBar = findViewById(R.id.progressBar)
         textView = findViewById(R.id.textView)
         imgView = findViewById(R.id.imageView)
-        gitButton = findViewById(R.id.button)
-        fixBtn = findViewById(R.id.clear)
 
         webView.webViewClient = WebViewClient()
         webView.webChromeClient = WebChromeClient()
@@ -46,50 +42,28 @@ class MainActivity : ComponentActivity() {
         progressBar.visibility = View.VISIBLE
         textView.visibility = View.VISIBLE
         imgView.visibility = View.VISIBLE
-        gitButton.visibility = View.VISIBLE
-        fixBtn.visibility = View.VISIBLE
 
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             webView.settings.javaScriptEnabled = true
-            webView.loadUrl("https://res.karpendev.ru/mobile/")
+            webView.loadUrl("https://karpendev.ru/mobile")
 
-            webView.setWebViewClient(object : WebViewClient() {
+            webView.webViewClient = object : WebViewClient() {
                 override fun onPageStarted(view: WebView?, url: String?, favicon: android.graphics.Bitmap?) {
                     progressBar.visibility = View.VISIBLE
                     textView.visibility = View.GONE
                     imgView.visibility = View.GONE
-                    gitButton.visibility = View.GONE
                     webView.visibility = View.GONE
-                    fixBtn.visibility = View.GONE
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     progressBar.visibility = View.GONE
                     textView.visibility = View.GONE
                     imgView.visibility = View.GONE
-                    gitButton.visibility = View.GONE
-                    fixBtn.visibility = View.GONE
                     webView.visibility = View.VISIBLE
                 }
-            })
+            }
         }, 2000)
-
-
-        gitButton.setOnClickListener(){
-            openBrowser("https://karpendev.ru/git")
-        }
-
-        fixBtn.setOnClickListener(){
-            clearCache(this)
-        }
-    }
-
-    private fun openBrowser(url: String){
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse(url)
-        }
-        startActivity(intent)
     }
 
     @Deprecated("Deprecated in Java")
@@ -98,27 +72,6 @@ class MainActivity : ComponentActivity() {
             webView.goBack()
         } else{
             super.onBackPressed()
-        }
-    }
-
-    fun clearCache(context: Context){
-        try {
-            val dir = context.cacheDir
-            if (dir.isDirectory){
-                deleteDir(dir)
-            }
-        } catch (e:Exception){
-            e.printStackTrace()
-        }
-    }
-
-    private fun deleteDir(dir: File): Any? {
-        return if (dir.isDirectory) {
-            dir.listFiles()?.forEach { child ->
-                deleteDir(child)
-            }
-        } else {
-            dir.delete()
         }
     }
 }

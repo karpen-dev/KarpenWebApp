@@ -41,21 +41,4 @@
         android:contentDescription="@string/todo"
         android:src="@mipmap/ic_launcher" />
 
-    <Button
-        android:id="@+id/button"
-        style="@android:style/Widget.Holo.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="155dp"
-        android:layout_marginTop="600dp"
-        android:text="@string/my_github" />
-    <Button
-        android:id="@+id/clear"
-        style="@android:style/Widget.Holo.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="650dp"
-        android:text="@string/fix_my_app" />
-
 </RelativeLayout>
